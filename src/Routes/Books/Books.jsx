@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ActionsBook from './ActionsBook';
+import Book from './Book';
 import AddBook from './AddBook';
 
 const Books = () => {
@@ -28,14 +28,7 @@ const Books = () => {
     <>
       <div className="container border rounded my-3 p-5">
         {books.map((book) => (
-          <div className="card mb-3" key={book.id}>
-            <div className="card-body">
-              <h6 className="card-title">{book.genre}</h6>
-              <h4 className="card-text">{book.title}</h4>
-              <p className="text-muted">{book.author}</p>
-              <ActionsBook />
-            </div>
-          </div>
+          <Book key={book.id} title={book.title} genre={book.genre} author={book.author} />
         ))}
         <AddBook />
       </div>
