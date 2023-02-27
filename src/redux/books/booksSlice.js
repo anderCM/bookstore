@@ -15,21 +15,3 @@ export default (state = { books: [] }, action) => {
 export const addBook = (book) => ({ type: ADD_BOOK, book });
 
 export const removeBook = (book) => ({ type: REMOVE_BOOK, book });
-
-/* import { createSlice } from '@reduxjs/toolkit';
-
-const initialState = {
-  books: [],
-};
-
-export const booksSlice = createSlice({
-  name: 'storeBooks',
-  initialState,
-  reducers: {
-    addBook: (state, action) => [...state.books, action.payload],
-    removeBook: (state, action) => state.books.filter((book) => book.id !== action.payload),
-  },
-});
-
-export const { addBook, removeBook } = booksSlice.actions;
-export default booksSlice.reducer; */
