@@ -10,4 +10,3 @@ export default (state = { categories: [] }, action) => {
 };
 
 export const statusCategory = () => ({ type: STATUS_CATEGORY });
-
