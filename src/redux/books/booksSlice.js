@@ -4,7 +4,6 @@ import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
 import url from '../../Constans/Url';
 
 // Action types
-export const ADD_BOOK = 'bookstore/books/ADD_BOOK';
 export const REMOVE_BOOK = 'bookstore/books/REMOVE_BOOK';
 
 // Action creator
@@ -14,11 +13,25 @@ export const fetchBooks = createAsyncThunk('bookstore/books/fetchBooks', async (
   return data;
 });
 
+export const postBooks = createAsyncThunk('bookstore/books/postBooks', async (book) => {
+  const params = {
+    method: 'POST',
+    body: JSON.stringify(book),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const response = await fetch(url, params);
+  const message = await response.text();
+  return message;
+});
+
 // Reducer
 const initialState = {
   books: [],
   isLoading: false,
   error: null,
+  message: null,
 };
 
 export default createReducer(initialState, (builder) => {
@@ -37,9 +50,21 @@ export default createReducer(initialState, (builder) => {
       isLoading: false,
       error: action.error.message,
     }))
-    .addCase(ADD_BOOK, (state) => ({
+    .addCase(postBooks.pending, (state) => ({
       ...state,
       isLoading: true,
+      error: null,
+      message: null,
+    }))
+    .addCase(postBooks.fulfilled, (state, action) => ({
+      ...state,
+      isLoading: false,
+      message: action.payload,
+    }))
+    .addCase(postBooks.rejected, (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.error.message,
     }))
     .addCase(REMOVE_BOOK, (state, action) => ({
       ...state,
@@ -47,5 +72,4 @@ export default createReducer(initialState, (builder) => {
     }));
 });
 
-export const addBook = (book) => ({ type: ADD_BOOK, book });
 export const removeBook = (id) => ({ type: REMOVE_BOOK, id });
