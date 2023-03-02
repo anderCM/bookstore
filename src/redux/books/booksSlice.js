@@ -1,46 +1,51 @@
 /* import/no-extraneous-dependencies */
-import { v4 as uuidv4 } from 'uuid';
+import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
 
+import url from '../../Constans/Url';
+
+// Action types
 export const ADD_BOOK = 'bookstore/books/ADD_BOOK';
 export const REMOVE_BOOK = 'bookstore/books/REMOVE_BOOK';
 
+// Action creator
+export const fetchBooks = createAsyncThunk('bookstore/books/fetchBooks', async () => {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+});
+
+// Reducer
 const initialState = {
-  books: [
-    {
-      id: uuidv4(),
-      title: 'The Great Gatsby',
-      author: 'John Smith',
-      genre: 'Fiction',
-    },
-    {
-      id: uuidv4(),
-      title: 'Anna Karenina',
-      author: 'Leo Tolstoy',
-      genre: 'Fiction',
-    },
-    {
-      id: uuidv4(),
-      title: 'The Selfish Gene',
-      author: 'Richard Dawkins',
-      genre: 'Nonfiction',
-    },
-  ],
+  books: [],
+  isLoading: false,
+  error: null,
 };
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_BOOK:
-      return {
-        ...state,
-        books: [...state.books, action.book],
-      };
-    case REMOVE_BOOK:
-      return { ...state, books: state.books.filter((book) => book.id !== action.id) };
-    default:
-      return state;
-  }
-};
+export default createReducer(initialState, (builder) => {
+  builder
+    .addCase(fetchBooks.pending, (state) => ({
+      ...state,
+      isLoading: true,
+    }))
+    .addCase(fetchBooks.fulfilled, (state, action) => ({
+      ...state,
+      isLoading: false,
+      books: action.payload,
+    }))
+    .addCase(fetchBooks.rejected, (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.error.message,
+    }))
+    .addCase(ADD_BOOK, (state) => ({
+      ...state,
+      isLoading: true,
+    }))
+    .addCase(REMOVE_BOOK, (state, action) => ({
+      ...state,
+      books: state.books.filter((book) => book.id !== action.id),
+    }));
+});
 
 export const addBook = (book) => ({ type: ADD_BOOK, book });
-
 export const removeBook = (id) => ({ type: REMOVE_BOOK, id });
