@@ -1,46 +1,98 @@
 /* import/no-extraneous-dependencies */
-import { v4 as uuidv4 } from 'uuid';
+import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
 
-export const ADD_BOOK = 'bookstore/books/ADD_BOOK';
-export const REMOVE_BOOK = 'bookstore/books/REMOVE_BOOK';
+import url from '../../Constans/Url';
 
+// Action creator
+export const fetchBooks = createAsyncThunk('bookstore/books/fetchBooks', async () => {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+});
+
+export const postBooks = createAsyncThunk('bookstore/books/postBooks', async (book) => {
+  const params = {
+    method: 'POST',
+    body: JSON.stringify(book),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const response = await fetch(url, params);
+  const message = await response.text();
+  return message;
+});
+
+export const deleteBooks = createAsyncThunk('bookstore/books/deleteBooks', async (id) => {
+  const params = {
+    method: 'DELETE',
+  };
+  const response = await fetch(`${url}/${id}`, params);
+  const message = await response.text();
+  return message;
+});
+
+// Reducer
 const initialState = {
-  books: [
-    {
-      id: uuidv4(),
-      title: 'The Great Gatsby',
-      author: 'John Smith',
-      genre: 'Fiction',
-    },
-    {
-      id: uuidv4(),
-      title: 'Anna Karenina',
-      author: 'Leo Tolstoy',
-      genre: 'Fiction',
-    },
-    {
-      id: uuidv4(),
-      title: 'The Selfish Gene',
-      author: 'Richard Dawkins',
-      genre: 'Nonfiction',
-    },
-  ],
+  books: [],
+  isLoading: false,
+  error: null,
+  message: null,
+  fetched: false,
 };
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_BOOK:
-      return {
-        ...state,
-        books: [...state.books, action.book],
-      };
-    case REMOVE_BOOK:
-      return { ...state, books: state.books.filter((book) => book.id !== action.id) };
-    default:
-      return state;
-  }
-};
-
-export const addBook = (book) => ({ type: ADD_BOOK, book });
-
-export const removeBook = (id) => ({ type: REMOVE_BOOK, id });
+export default createReducer(initialState, (builder) => {
+  builder
+    .addCase(fetchBooks.pending, (state) => ({
+      ...state,
+      isLoading: true,
+    }))
+    .addCase(fetchBooks.fulfilled, (state, action) => ({
+      ...state,
+      isLoading: false,
+      books: action.payload,
+    }))
+    .addCase(fetchBooks.rejected, (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.error.message,
+    }))
+    .addCase(postBooks.pending, (state) => ({
+      ...state,
+      isLoading: true,
+      error: null,
+      message: null,
+      fetched: false,
+    }))
+    .addCase(postBooks.fulfilled, (state, action) => ({
+      ...state,
+      isLoading: false,
+      message: action.payload,
+      fetched: true,
+    }))
+    .addCase(postBooks.rejected, (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.error.message,
+      fetched: false,
+    }))
+    .addCase(deleteBooks.pending, (state) => ({
+      ...state,
+      isLoading: true,
+      error: null,
+      message: null,
+      fetched: false,
+    }))
+    .addCase(deleteBooks.fulfilled, (state, action) => ({
+      ...state,
+      isLoading: false,
+      message: action.payload,
+      fetched: true,
+    }))
+    .addCase(deleteBooks.rejected, (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.error.message,
+      fetched: false,
+    }));
+});

@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
-import { useDispatch } from 'react-redux';
+import CategoryIcon from '@mui/icons-material/Category';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
-import { addBook } from '../../redux/books/booksSlice';
+import { postBooks } from '../../redux/books/booksSlice';
 import SimpleToast from '../../Components/Alerts/Toasts';
 
 const AddBook = () => {
-  const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
+  const [category, setCategory] = useState('');
+  const dispatch = useDispatch();
+  const message = useSelector((state) => state.books.message);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,14 +25,22 @@ const AddBook = () => {
       return;
     }
     const book = {
-      id: uuidv4(),
+      item_id: uuidv4(),
       title,
       author,
-      genre: 'Not Genre',
+      category,
     };
-    dispatch(addBook(book));
+    dispatch(postBooks(book));
     setTitle('');
     setAuthor('');
+    setCategory('');
+
+    if (message) {
+      SimpleToast.fire({
+        icon: 'success',
+        title: message,
+      });
+    }
   };
 
   return (
@@ -37,7 +48,7 @@ const AddBook = () => {
       <h4 className="text-muted">ADD NEW BOOK</h4>
       <form onSubmit={handleSubmit}>
         <div className="row">
-          <div className="col-md-7 my-2">
+          <div className="col-md-4 my-2">
             <div className="form-floating">
               <input
                 type="text"
@@ -66,6 +77,21 @@ const AddBook = () => {
                 Author
                 {' '}
                 <LocalLibraryIcon fontSize="small" />
+              </label>
+            </div>
+          </div>
+          <div className="col-md-3 my-2">
+            <div className="form-floating">
+              <select className="form-select" id="category-book" onChange={(e) => setCategory(e.target.value)}>
+                <option>Horror</option>
+                <option>Comedy</option>
+                <option>Cartoon</option>
+                <option>Action</option>
+              </select>
+              <label htmlFor="category-book">
+                Category
+                {' '}
+                <CategoryIcon fontSize="small" />
               </label>
             </div>
           </div>
