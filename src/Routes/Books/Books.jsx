@@ -24,7 +24,7 @@ const Books = () => {
 
   return (
     <>
-      <div className="container border rounded my-3 p-3">
+      <div className="container my-3">
         { Object.keys(books).map((key) => (
           <Book key={key} idBook={key} book={books[key][0]} />
         ))}

@@ -28,11 +28,11 @@ const ActionsBook = ({ id }) => {
   }
   return (
     <div className="d-flex gap-4 justify-content-start">
-      <button type="button" className="btn btn-outline-primary border-0">Comments</button>
+      <button type="button" className="btn btn-outline-secondary border-0 p-0">Comments</button>
       <span className="border-end" />
-      <button type="button" className="btn btn-outline-primary border-0" onClick={handleRemoveBook}>Remove</button>
+      <button type="button" className="btn btn-outline-secondary border-0 p-0" onClick={handleRemoveBook}>Remove</button>
       <span className="border-end" />
-      <button type="button" className="btn btn-outline-primary border-0">Edit</button>
+      <button type="button" className="btn btn-outline-secondary border-0 p-0">Edit</button>
     </div>
   );
 };

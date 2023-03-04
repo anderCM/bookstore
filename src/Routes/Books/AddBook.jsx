@@ -45,7 +45,7 @@ const AddBook = () => {
 
   return (
     <div className="container-fluid mt-5">
-      <h4 className="text-muted">ADD NEW BOOK</h4>
+      <h4 className="text-muted fw-bold">ADD NEW BOOK</h4>
       <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-md-4 my-2">
