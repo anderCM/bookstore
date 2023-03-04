@@ -34,14 +34,14 @@ const AddBook = () => {
     setTitle('');
     setAuthor('');
     setCategory('');
-  };
 
-  if (message) {
-    SimpleToast.fire({
-      icon: 'success',
-      title: message,
-    });
-  }
+    if (message) {
+      SimpleToast.fire({
+        icon: 'success',
+        title: message,
+      });
+    }
+  };
 
   return (
     <div className="container-fluid mt-5">
@@ -82,13 +82,12 @@ const AddBook = () => {
           </div>
           <div className="col-md-3 my-2">
             <div className="form-floating">
-              <input
-                type="text"
-                className="form-control"
-                id="category-book"
-                placeholder="Category"
-                onChange={(e) => setCategory(e.target.value)}
-              />
+              <select className="form-select" id="category-book" onChange={(e) => setCategory(e.target.value)}>
+                <option>Horror</option>
+                <option>Comedy</option>
+                <option>Cartoon</option>
+                <option>Action</option>
+              </select>
               <label htmlFor="category-book">
                 Category
                 {' '}

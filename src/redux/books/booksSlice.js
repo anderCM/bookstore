@@ -3,9 +3,6 @@ import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
 
 import url from '../../Constans/Url';
 
-// Action types
-export const REMOVE_BOOK = 'bookstore/books/REMOVE_BOOK';
-
 // Action creator
 export const fetchBooks = createAsyncThunk('bookstore/books/fetchBooks', async () => {
   const response = await fetch(url);
@@ -26,12 +23,22 @@ export const postBooks = createAsyncThunk('bookstore/books/postBooks', async (bo
   return message;
 });
 
+export const deleteBooks = createAsyncThunk('bookstore/books/deleteBooks', async (id) => {
+  const params = {
+    method: 'DELETE',
+  };
+  const response = await fetch(`${url}/${id}`, params);
+  const message = await response.text();
+  return message;
+});
+
 // Reducer
 const initialState = {
   books: [],
   isLoading: false,
   error: null,
   message: null,
+  fetched: false,
 };
 
 export default createReducer(initialState, (builder) => {
@@ -55,21 +62,37 @@ export default createReducer(initialState, (builder) => {
       isLoading: true,
       error: null,
       message: null,
+      fetched: false,
     }))
     .addCase(postBooks.fulfilled, (state, action) => ({
       ...state,
       isLoading: false,
       message: action.payload,
+      fetched: true,
     }))
     .addCase(postBooks.rejected, (state, action) => ({
       ...state,
       isLoading: false,
       error: action.error.message,
+      fetched: false,
     }))
-    .addCase(REMOVE_BOOK, (state, action) => ({
+    .addCase(deleteBooks.pending, (state) => ({
       ...state,
-      books: state.books.filter((book) => book.id !== action.id),
+      isLoading: true,
+      error: null,
+      message: null,
+      fetched: false,
+    }))
+    .addCase(deleteBooks.fulfilled, (state, action) => ({
+      ...state,
+      isLoading: false,
+      message: action.payload,
+      fetched: true,
+    }))
+    .addCase(deleteBooks.rejected, (state, action) => ({
+      ...state,
+      isLoading: false,
+      error: action.error.message,
+      fetched: false,
     }));
 });
-
-export const removeBook = (id) => ({ type: REMOVE_BOOK, id });
