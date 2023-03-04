@@ -1,28 +1,28 @@
-  .mask .fill {
-    clip: rect(0, 50px, 100px, 0);
-  }
-  
-  .mask.full,
-  .circle .fill {
-    transform: rotate(135deg);
-  }
-  
-  .container-circle {
-    width: 108px;
-    height: 108px;
-  }
-  
-  .container-circle .circle .mask,
-  .container-circle .circle .fill {
-    width: 108px;
-    height: 108px;
-  }
-  
-  .container-circle .circle .mask {
-    clip: rect(0, 108px, 108px, 50px);
-  }
+.mask .fill {
+  clip: rect(0, 50px, 100px, 0);
+}
 
-  .container-circle .inside-circle {
-    width: 93px;
-    height: 93px;
-  }
+.mask.full,
+.circle .fill {
+  transform: rotate(135deg);
+}
+
+.container-circle {
+  width: 108px;
+  height: 108px;
+}
+
+.container-circle .circle .mask,
+.container-circle .circle .fill {
+  width: 108px;
+  height: 108px;
+}
+
+.container-circle .circle .mask {
+  clip: rect(0, 108px, 108px, 50px);
+}
+
+.container-circle .inside-circle {
+  width: 93px;
+  height: 93px;
+}
