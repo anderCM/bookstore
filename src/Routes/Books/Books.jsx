@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Book from './Book';
-import AddBook from './AddBook';
+import Book from '../../Components/Book/Book';
+import AddBook from '../../Components/Book/AddBook';
 import { fetchBooks } from '../../redux/books/booksSlice';
 import Loading from '../../Components/Alerts/Loading';
 import SimpleAlert from '../../Components/Alerts/Alerts';
@@ -25,8 +25,8 @@ const Books = () => {
   return (
     <>
       <div className="container my-3">
-        { Object.keys(books).map((key) => (
-          <Book key={key} idBook={key} book={books[key][0]} />
+        { Object.keys(books).map((key, index) => (
+          <Book key={key} idBook={key} book={books[key][0]} index={index} />
         ))}
         <AddBook />
       </div>

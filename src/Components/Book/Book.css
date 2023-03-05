@@ -1,0 +1,19 @@
+.card-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9rem;
+}
+
+.card-text,
+.card-author {
+  font-family: "Roboto Slab", serif;
+}
+
+.card-author {
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+.divider {
+  width: 0.1rem;
+  height: 4rem;
+}

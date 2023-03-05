@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
-import SimpleAlert from '../../Components/Alerts/Alerts';
-import SimpleToast from '../../Components/Alerts/Toasts';
+import SimpleAlert from '../Alerts/Alerts';
+import SimpleToast from '../Alerts/Toasts';
 import { deleteBooks } from '../../redux/books/booksSlice';
+import './ActionsBook.css';
 
 const ActionsBook = ({ id }) => {
   const {
@@ -27,12 +28,12 @@ const ActionsBook = ({ id }) => {
     });
   }
   return (
-    <div className="d-flex gap-4 justify-content-start">
-      <button type="button" className="btn btn-outline-secondary border-0 p-0">Comments</button>
+    <div className="d-flex gap-3 justify-content-start">
+      <button type="button" className="btn border-0 p-0 opacity-75">Comments</button>
       <span className="border-end" />
-      <button type="button" className="btn btn-outline-secondary border-0 p-0" onClick={handleRemoveBook}>Remove</button>
+      <button type="button" className="btn border-0 p-0 opacity-75" onClick={handleRemoveBook}>Remove</button>
       <span className="border-end" />
-      <button type="button" className="btn btn-outline-secondary border-0 p-0">Edit</button>
+      <button type="button" className="btn border-0 p-0 opacity-75">Edit</button>
     </div>
   );
 };

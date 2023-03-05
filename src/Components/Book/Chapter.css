@@ -1,0 +1,19 @@
+p {
+  font-family: "Roboto Slab", serif;
+}
+
+.chapter {
+  font-size: 0.8rem;
+  font-weight: 300;
+}
+
+.current-chapter {
+  letter-spacing: -0.6px;
+  font-weight: 300;
+}
+
+.update-progress {
+  background-color: #0290ff;
+  border-radius: 3px;
+  color: #fff;
+}

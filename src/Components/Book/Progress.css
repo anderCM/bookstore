@@ -1,28 +1,20 @@
-.mask .fill {
-  clip: rect(0, 50px, 100px, 0);
+.circular-progress {
+  width: 5rem;
+  height: 5rem;
+  border: 5px solid #307bbe;
+  border-left-color: #e8e8e8;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
-.mask.full,
-.circle .fill {
-  transform: rotate(135deg);
+p {
+  font-family: "Montserrat", sans-serif;
 }
 
-.container-circle {
-  width: 108px;
-  height: 108px;
+.percemtaje {
+  font-size: 2rem;
 }
 
-.container-circle .circle .mask,
-.container-circle .circle .fill {
-  width: 108px;
-  height: 108px;
-}
-
-.container-circle .circle .mask {
-  clip: rect(0, 108px, 108px, 50px);
-}
-
-.container-circle .inside-circle {
-  width: 93px;
-  height: 93px;
+.status {
+  font-size: 0.9rem;
 }
