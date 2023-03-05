@@ -19,7 +19,7 @@ const Book = ({ idBook, book, index }) => {
             <div className="col-12 col-md-6">
               <h6 className="card-title text-muted fw-bold opacity-75">{category}</h6>
               <h5 className="card-text fw-bold mb-0">{title}</h5>
-              <p className="card-author text-muted">{author}</p>
+              <p className="card-author">{author}</p>
               <ActionsBook id={idBook} />
             </div>
             <div className="col-4 col-md-2 mt-3">
