@@ -1,0 +1,20 @@
+.circular-progress {
+  width: 5rem;
+  height: 5rem;
+  border: 5px solid #307bbe;
+  border-left-color: #e8e8e8;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+p {
+  font-family: "Montserrat", sans-serif;
+}
+
+.percemtaje {
+  font-size: 2rem;
+}
+
+.status {
+  font-size: 0.9rem;
+}

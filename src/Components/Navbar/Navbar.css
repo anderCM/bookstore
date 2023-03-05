@@ -1,0 +1,12 @@
+.navbar {
+  font-family: "Montserrat", sans-serif;
+}
+
+.nav-item .nav-link {
+  letter-spacing: 1.9px;
+  font-size: 0.8rem;
+}
+
+.navbar-brand-name {
+  color: #0290ff;
+}
